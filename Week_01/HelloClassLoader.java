@@ -38,10 +38,8 @@ public class HelloClassLoader extends ClassLoader{
      */
     private byte[] getClassData()  {
         File classFile=new File(path);
-        FileInputStream in=null;
         ByteArrayOutputStream out=null;
-        try {
-            in=new FileInputStream(classFile);
+        try (FileInputStream in=new FileInputStream(classFile)){
             out=new ByteArrayOutputStream();
             byte[] buffer=new byte[1024];
             int size=0;
@@ -50,12 +48,6 @@ public class HelloClassLoader extends ClassLoader{
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         return out.toByteArray();
     }
