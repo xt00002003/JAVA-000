@@ -1,0 +1,49 @@
+{
+  "groups": [
+    {
+      "name": "custom",
+      "type": "com.dark.learn.starter.pojo.CustomObjectAutoConfiguration"
+    }
+  ],
+  "properties": [
+    {
+      "name": "custom.student.name",
+      "type": "java.lang.String",
+      "description": "学生的姓名",
+      "defaultValue": "张三"
+    },
+    {
+      "name": "custom.student.age",
+      "type": "java.lang.Integer",
+      "description": "年龄",
+      "defaultValue": 20
+    },
+    {
+      "name": "custom.klass.name",
+      "type": "java.lang.String"
+    },
+    {
+      "name": "custom.school.name",
+      "type": "java.lang.String"
+
+    },
+    {
+      "name": "custom.school",
+      "type": "com.dark.learn.starter.pojo.School",
+      "sourceType": "com.dark.learn.starter.pojo.School"
+
+    },
+    {
+      "name": "custom.klass",
+      "type": "com.dark.learn.starter.pojo.Klass",
+      "sourceType": "com.dark.learn.starter.pojo.Klass"
+
+    },
+    {
+      "name": "custom.student",
+      "type": "com.dark.learn.starter.pojo.Student",
+      "sourceType": "com.dark.learn.starter.pojo.Student"
+
+    }
+  ]
+}
