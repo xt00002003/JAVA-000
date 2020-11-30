@@ -117,9 +117,8 @@ public class JDBCController {
 
             }
             productMap.put(j, productList);
-//            productService.insertBatch(productList);
         }
-        ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
+        ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newWorkStealingPool());
         productMap.forEach((index, items) -> {
             final ListenableFuture<Integer> listenableFuture = service.submit(() -> {
                 log.info("顺序是:" + index);
