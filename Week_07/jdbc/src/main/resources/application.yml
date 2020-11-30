@@ -5,7 +5,7 @@ spring:
   datasource:
 #    type: com.alibaba.druid.pool.DruidDataSource　　 # MYSQL 5 驱动：com.mysql.jdbc.Driver，MYSQL 6+ 驱动：com.mysql.cj.jdbc.Driver
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://172.16.8.181:3317/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: 123456
     # 连接池配置
@@ -40,14 +40,26 @@ spring:
       stat-view-servlet:
         url-pattern: /druid/*
         # IP 白名单，没有配置或者为空，则允许所有访问
-        allow: 127.0.0.1
+#        allow: 127.0.0.1
         # IP 黑名单，若白名单也存在，则优先使用
-        deny: 192.168.31.253
+#        deny: 192.168.31.253
         # 禁用 HTML 中 Reset All 按钮
         reset-enable: false
         # 登录用户名/密码
         login-username: root
         login-password: 123
-      url: jdbc:mysql://127.0.0.1:3306/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://172.16.8.181:3317/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
       username: root
       password: 123456
+
+
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.dark
+
+#showSql
+logging:
+  level:
+    com:
+      example:
+        mapper : debug

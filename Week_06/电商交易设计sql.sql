@@ -36,7 +36,7 @@ CREATE TABLE  product_snapshot  (
 
 CREATE TABLE order_master(
   order_id bigint(20) NOT NULL AUTO_INCREMENT COMMENT '订单ID',
-  order_sn BIGINT UNSIGNED NOT NULL COMMENT '订单编号 yyyymmddnnnnnnnn', 
+  order_sn bigint(20) NOT NULL COMMENT '订单编号 yyyymmddnnnnnnnn', 
   customer_id INT UNSIGNED NOT NULL COMMENT '下单人ID', 
   shipping_user VARCHAR(10) NOT NULL COMMENT '收货人姓名', 
   province SMALLINT NOT NULL COMMENT '省', 
