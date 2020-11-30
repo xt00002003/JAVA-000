@@ -99,15 +99,15 @@ public class JDBCController {
     @RequestMapping("/insertBatch2")
     @ResponseBody
     public String insertBatch2() {
-        Product product=null;
-        Long startTime=System.currentTimeMillis();
-        List<Product> productList=null;
-        Map<Integer,List<Product>> productMap=new ConcurrentHashMap<>(100);
-        for(int j=0;j<99;j++){
-            productList=new ArrayList<>(10000);
-            for (int i=0;i<10000;i++){
-                product=new Product();
-                product.setName("测试商品"+i);
+        Product product = null;
+        Long startTime = System.currentTimeMillis();
+        List<Product> productList = null;
+        Map<Integer, List<Product>> productMap = new ConcurrentHashMap<>(100);
+        for (int j = 0; j < 99; j++) {
+            productList = new ArrayList<>(10000);
+            for (int i = 0; i < 10000; i++) {
+                product = new Product();
+                product.setName("测试商品" + i);
                 product.setPrice(20000L);
                 product.setStock(100);
                 product.setVersion(1);
@@ -116,19 +116,33 @@ public class JDBCController {
                 productList.add(product);
 
             }
-            productMap.put(j,productList);
+            productMap.put(j, productList);
 //            productService.insertBatch(productList);
         }
         ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
-        productMap.forEach((index,items)->{
+        productMap.forEach((index, items) -> {
+            final ListenableFuture<Integer> listenableFuture = service.submit(() -> {
+                log.info("顺序是:" + index);
+                Integer result = productService.insertBatch(items);
+                return result;
+            });
+            Futures.addCallback(listenableFuture, new FutureCallback<Integer>() {
+                @Override
+                public void onSuccess(Integer integer) {
+                    log.info("执行的结果是:"+integer);
+                }
 
+                @Override
+                public void onFailure(Throwable throwable) {
+                    log.error(throwable.getMessage());
+                }
+            });
         });
 
-        ListenableFuture explosion = service.submit(()-> {
 
 
 
-        });
+
 
 
         Long endTime=System.currentTimeMillis();
