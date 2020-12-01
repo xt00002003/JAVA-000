@@ -13,10 +13,10 @@ public enum DataSourceType {
     /**
      * 主库
      */
-    MASTER,
+    FIRST,
 
     /**
      * 从库
      */
-    SLAVE
+    SECOND
 }
