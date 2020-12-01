@@ -51,6 +51,60 @@ spring:
       url: jdbc:mysql://172.16.8.181:3317/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
       username: root
       password: 123456
+      # 主库数据源
+      first:
+        url: jdbc:mysql://172.16.8.181:3317/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password: 123456
+          # 初始化大小，最小，最大
+          initial-size: 5
+          min-idle: 5
+          max-active: 20
+          # 配置获取连接等待超时的时间
+          max-wait: 60000
+          # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒
+          time-between-eviction-runs-millis: 60000
+          # 配置一个连接在池中最小生存时间
+          min-evictable-idle-time-millis: 300000
+          validation-query: SELECT 1 FROM sys_user
+          test-while-idle: true
+          test-on-borrow: false
+          test-on-return: false
+          # 打开 PSCache，并且指定每个连接上 PSCache 的大小
+          pool-prepared-statements: true
+          max-pool-prepared-statement-per-connection-size: 20
+          # 配置监控统计拦截的 Filter，去掉后监控界面 SQL 无法统计，wall 用于防火墙
+          filters: stat,wall,log4j
+          # 通过 connection-properties 属性打开 mergeSql 功能；慢 SQL 记录
+          connection-properties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      # 从库数据源
+      second:
+        # 从数据源开关/默认关闭
+        url: jdbc:mysql://172.16.8.181:3318/my_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&useSSL=false
+        username: root
+        password: 123456
+          # 初始化大小，最小，最大
+          initial-size: 5
+          min-idle: 5
+          max-active: 20
+          # 配置获取连接等待超时的时间
+          max-wait: 60000
+          # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位毫秒
+          time-between-eviction-runs-millis: 60000
+          # 配置一个连接在池中最小生存时间
+          min-evictable-idle-time-millis: 300000
+          validation-query: SELECT 1 FROM sys_user
+          test-while-idle: true
+          test-on-borrow: false
+          test-on-return: false
+          # 打开 PSCache，并且指定每个连接上 PSCache 的大小
+          pool-prepared-statements: true
+          max-pool-prepared-statement-per-connection-size: 20
+          # 配置监控统计拦截的 Filter，去掉后监控界面 SQL 无法统计，wall 用于防火墙
+          filters: stat,wall,log4j
+          # 通过 connection-properties 属性打开 mergeSql 功能；慢 SQL 记录
+          connection-properties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+
 
 
 mybatis:

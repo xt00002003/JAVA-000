@@ -93,7 +93,7 @@ public class JDBCController {
 
     /**
      * 先把对象放入集合，然后使用多线程去插入
-     * TODO
+     * insertBatch2-》花费的时间4112
      * @return
      */
     @RequestMapping("/insertBatch2")
@@ -102,6 +102,7 @@ public class JDBCController {
         Product product = null;
         Long startTime = System.currentTimeMillis();
         List<Product> productList = null;
+
         Map<Integer, List<Product>> productMap = new ConcurrentHashMap<>(100);
         for (int j = 0; j < 99; j++) {
             productList = new ArrayList<>(10000);
@@ -139,14 +140,9 @@ public class JDBCController {
         });
 
 
-
-
-
-
-
         Long endTime=System.currentTimeMillis();
         Long spendTime=endTime-startTime;
-        System.out.println("insertBatch-》花费的时间"+spendTime);
+        System.out.println("insertBatch2-》花费的时间"+spendTime);
         return "花费的时间"+spendTime;
     }
 
