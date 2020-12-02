@@ -30,18 +30,18 @@ import java.util.Map;
 public class DataSourceConfig {
 
 
-    @Bean("firstDataSource")
-    @ConfigurationProperties("spring.datasource.druid.first")
-    public DataSource firstDataSource() {
-        return DataSourceBuilder.create().build();
-    }
-
-    @Bean("secondDataSource")
-    @ConfigurationProperties("spring.datasource.druid.second")
-    @ConditionalOnProperty(prefix = "spring.datasource.druid.second", name = "enabled", havingValue = "true")
-    public DataSource secondDataSource() {
-        return DataSourceBuilder.create().build();
-    }
+//    @Bean("firstDataSource")
+//    @ConfigurationProperties("spring.datasource.druid.first")
+//    public DataSource firstDataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
+//
+//    @Bean("secondDataSource")
+//    @ConfigurationProperties("spring.datasource.druid.second")
+//    @ConditionalOnProperty(prefix = "spring.datasource.druid.second", name = "enabled", havingValue = "true")
+//    public DataSource secondDataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
 
     @Bean(name = "dynamicDataSource")
     @Primary
