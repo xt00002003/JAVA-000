@@ -1,10 +1,13 @@
 package com.dark.learn.jdbc.service.impl;
 
+import com.dark.learn.jdbc.conf.CustomDataSource;
+import com.dark.learn.jdbc.conf.DataSourceType;
 import com.dark.learn.jdbc.dao.ProductDao;
 import com.dark.learn.jdbc.entity.Product;
 import com.dark.learn.jdbc.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,9 +29,13 @@ public class ProductServiceImpl implements ProductService {
         return productDao.deleteByPrimaryKey(id);
     }
 
+    @Transactional(rollbackFor = RuntimeException.class)
     @Override
+    @CustomDataSource(DataSourceType.SECOND)
     public int insert(Product record) {
-        return productDao.insert(record);
+        int result=productDao.insert(record);
+        int z=1/0;
+        return result;
     }
 
     @Override

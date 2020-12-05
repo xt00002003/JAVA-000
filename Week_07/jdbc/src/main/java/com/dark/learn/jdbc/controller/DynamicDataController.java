@@ -12,6 +12,7 @@ import com.dark.learn.jdbc.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,13 +28,13 @@ public class DynamicDataController {
 
     @RequestMapping("/insertRecord")
     @ResponseBody
-    @CustomDataSource(DataSourceType.FIRST)
+
     public String insertRecord() {
         Product product=null;
         Long startTime=System.currentTimeMillis();
         for (int i=0;i<1;i++){
             product=new Product();
-            product.setName("测试商品"+i);
+            product.setName("动态数据源商品"+DataSourceType.SECOND);
             product.setPrice(20000L);
             product.setStock(100);
             product.setVersion(1);
@@ -43,6 +44,7 @@ public class DynamicDataController {
         }
         Long endTime=System.currentTimeMillis();
         Long spendTime=endTime-startTime;
+//        int z=1/0;
         System.out.println("insertRecord-》花费的时间"+spendTime);
         return "花费的时间"+spendTime;
     }

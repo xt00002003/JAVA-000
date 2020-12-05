@@ -29,23 +29,9 @@ import java.util.Map;
 @Configuration
 public class DataSourceConfig {
 
-
-//    @Bean("firstDataSource")
-//    @ConfigurationProperties("spring.datasource.druid.first")
-//    public DataSource firstDataSource() {
-//        return DataSourceBuilder.create().build();
-//    }
-//
-//    @Bean("secondDataSource")
-//    @ConfigurationProperties("spring.datasource.druid.second")
-//    @ConditionalOnProperty(prefix = "spring.datasource.druid.second", name = "enabled", havingValue = "true")
-//    public DataSource secondDataSource() {
-//        return DataSourceBuilder.create().build();
-//    }
-
     @Bean(name = "dynamicDataSource")
     @Primary
-    public DynamicDataSource dataSource(@Qualifier("firstDataSource")DataSource firstDataSource, @Qualifier("secondDataSource")DataSource secondDataSource) {
+    public DynamicDataSource dataSource(@Qualifier("druidDataSource")DataSource firstDataSource, @Qualifier("secondDruidDataSource")DataSource secondDataSource) {
         Map<Object, Object> targetDataSources = new HashMap<>();
         targetDataSources.put(DataSourceType.FIRST.name(), firstDataSource);
         targetDataSources.put(DataSourceType.SECOND.name(), secondDataSource);

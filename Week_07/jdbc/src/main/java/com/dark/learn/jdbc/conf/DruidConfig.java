@@ -13,7 +13,11 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.sql.DataSource;
@@ -21,37 +25,23 @@ import javax.sql.DataSource;
 @Configuration
 public class DruidConfig {
     @Bean
-    // 将所有前缀为spring.datasource下的配置项都加载DataSource中
-    @ConfigurationProperties(prefix = "spring.datasource")
+    /**
+     * 使用这个注解获取配置文件中的信息，直接封账成DruidDataSource
+     */
+    @ConfigurationProperties(prefix = "first.datasource")
     public DataSource druidDataSource() {
-        return new DruidDataSource();
+        DruidDataSource first=new DruidDataSource();
+        return first;
     }
 
     @Bean
-    public ServletRegistrationBean<Servlet> druidServlet() {
-        // 进行 druid 监控的配置处理
-        ServletRegistrationBean<Servlet> srb = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/**");
-        // 白名单
-//        srb.addInitParameter("allow", "127.0.0.1");
-        // 黑名单
-        srb.addInitParameter("deny", "192.168.31.253");
-        // 用户名
-        srb.addInitParameter("loginUsername", "root");
-        // 密码
-        srb.addInitParameter("loginPassword", "123");
-        // 是否可以重置数据源
-        srb.addInitParameter("resetEnable", "false");
-        return srb;
+    /**
+     * 使用这个注解获取配置文件中的信息，直接封账成DruidDataSource
+     */
+    @ConfigurationProperties(prefix = "second.datasource")
+    public DataSource secondDruidDataSource() {
+        DruidDataSource second=new DruidDataSource();
+        return second;
     }
 
-    @Bean
-    public FilterRegistrationBean<Filter> filterRegistrationBean() {
-        FilterRegistrationBean<Filter> frb = new FilterRegistrationBean<>();
-        frb.setFilter(new WebStatFilter());
-        // 所有请求进行监控处理
-        frb.addUrlPatterns("/*");
-        // 排除名单
-        frb.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.css,/druid/*");
-        return frb;
-    }
 }
