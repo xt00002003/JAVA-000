@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 /**
  * project_name: jdbc
  * package: com.dark.learn.jdbc.service
- * describe: TODO
+ * describe: 根据注解去切换数据源
  *
  * @author : xue.teng
  * creat_date: 2020-12-01
@@ -35,9 +35,16 @@ public class DataSourceAspect {
 
     }
 
+    /**
+     * 根据注解去切换数据源
+     * @param point
+     * @return
+     * @throws Throwable
+     */
     @Around("dsPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
+        //获取
         Method method = signature.getMethod();
         CustomDataSource dataSource = method.getAnnotation(CustomDataSource.class);
         if (dataSource != null) {

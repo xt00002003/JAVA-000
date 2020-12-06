@@ -31,10 +31,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(rollbackFor = RuntimeException.class)
     @Override
-    @CustomDataSource(DataSourceType.SECOND)
+//    @CustomDataSource(DataSourceType.SECOND)
     public int insert(Product record) {
         int result=productDao.insert(record);
-        int z=1/0;
         return result;
     }
 
